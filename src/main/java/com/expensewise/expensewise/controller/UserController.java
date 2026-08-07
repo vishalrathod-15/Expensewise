@@ -1,5 +1,6 @@
 package com.expensewise.expensewise.controller;
 
+import com.expensewise.expensewise.dto.UserResponseDTO;
 import com.expensewise.expensewise.entity.User;
 import com.expensewise.expensewise.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,14 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UserResponseDTO createUser(@RequestBody User user) {
+        User savedUser = userService.createUser(user);
+        return savedUser.toResponseDTO();
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public UserResponseDTO getUser(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        return user.toResponseDTO();
     }
 }
